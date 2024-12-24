@@ -9,7 +9,7 @@ app.use(express.static("view"));
 app.set("views", __dirname + "/view");
 
 app.get("/", async (req, res) => {
-  res.sendFile(path.join(__dirname + "/view/countdown/index.html"));
+  res.sendFile(path.join(__dirname + "/view/index.html"));
 });
 
 app.get("/hny", async (request, response) => {
@@ -17,10 +17,10 @@ app.get("/hny", async (request, response) => {
 });
 
 
-app.get("*", (request, response) => {
-  response.sendStatus(404).send("Not Found");
+app.use((req, res, next) => {
+  res.status(404).send("Not Found");
 });
 
 const listener = app.listen(process.env.PORT, () =>
-  console.log(`Đã mở tại port: ${listener.address().port}`)
+  console.log(`Đã mở tại port: http://localhost:${listener.address().port}`)
 );

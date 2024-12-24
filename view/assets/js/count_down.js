@@ -6,7 +6,7 @@
         },
 
         get period() {
-            let t = new Date("02/10/2024").getTime(),
+            let t = new Date("jan 29, 2025 23:59:00").getTime(),
                 n = new Date,
                 r = Math.floor((t - n) / 1e3),
                 o = Math.floor(r / 60),
@@ -31,8 +31,7 @@
         year: function(t) {
             let n = new TimelineMax,
                 r = e.element(e.newYear, "div", t),
-                // o = "Welcome " + String(e.period.year);
-                o = `${String(e.period.year)} coming`;
+                o = `${String(e.period.year+1)} coming`;
             for (let l = 0; l <= o.length - 1; l++) {
                 let $ = e.element(r, "div", "digit", o.substr(l, 1));
                 $.style.top = 0 - 2 * $.clientHeight + "px", n.to($, .5, {
