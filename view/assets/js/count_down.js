@@ -6,8 +6,7 @@
         },
 
         get period() {
-            // let t = new Date("jan 29, 2025 23:59:00").getTime(),
-            let t = new Date("1/1/2024 07:20:00").getTime(),
+            let t = new Date("jan 29, 2025 23:59:00").getTime(),
                 n = new Date,
                 r = Math.floor((t - n) / 1e3),
                 o = Math.floor(r / 60),
@@ -16,6 +15,9 @@
 
                 if(r<0){
                     window.location.href=`hny/${wishData.id}`
+                }
+                if(r>0){
+                    window.location.href=`/${wishData.id}`
                 }
             return l -= 24 * $, o = o - 1440 * $ - 60 * l, r = r - 86400 * $ - 3600 * l - 60 * o, $ < 0 && ($ = 0, l = 0, o = 0, r = 0), {
                 year: new Date().getFullYear(),

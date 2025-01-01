@@ -77,8 +77,18 @@
         <div id="successMessage">
             <h2 style="color: #e74c3c;">🎉 Chúc mừng! Lời chúc của bạn đã được tạo thành công! 🎉</h2>
             <p style="font-size: 18px; margin: 20px 0;">Link lời chúc của bạn là:</p>
-            <div id="wishLink" style="padding: 15px; background: #f1c40f; border-radius: 8px; margin: 10px 0;"></div>
-            <p style="font-size: 16px; color: #7f8c8d;">Hãy copy link trên và gửi cho người thân yêu của bạn nhé! ❤️</p>
+            <div id="wishLink" style="padding: 15px; background: #f1c40f; border-radius: 8px; margin: 10px 0; cursor: pointer;" onclick="copyToClipboard(this.textContent)"></div>
+            <p style="font-size: 16px; color: #7f8c8d;">Nhấn vào link trên để copy và gửi cho người thân yêu của bạn nhé! ❤️</p>
+            <p style="color: #7f8c8d;">Lưu ý: Web sẽ đếm ngược tới năm mới, sau đó mới hiển thị lời chúc của bạn.</p>
+            <script>
+            function copyToClipboard(text) {
+                navigator.clipboard.writeText(text).then(() => {
+                    alert('Đã copy link thành công!');
+                }).catch(err => {
+                    console.error('Không thể copy: ', err);
+                });
+            }
+            </script>
         </div>
     </div>
 
