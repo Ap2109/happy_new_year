@@ -8,8 +8,11 @@
 </head>
 <body>
     <div class="firework"></div>
-    <div class="lantern" style="top: 20px; left: 20px;"></div>
     <div class="lantern" style="top: 20px; right: 20px;"></div>
+
+    <div class="loading" id="loading">
+        <div class="loading-spinner"></div>
+    </div>
 
     <div class="container">
         <div class="home-content" id="homeContent">
@@ -24,6 +27,9 @@
             <button onclick="showWishForm()" class="cta-button">
                 🎋 Tạo Lời Chúc Ngay 🎋
             </button>
+            <a href="/hny/0" class="cta-button">
+                🎉 Xem Demo 🎉
+            </a>
 
             <p class="description">
                 Năm mới Ất Tỵ 2025 đang đến gần! <br>
@@ -38,12 +44,12 @@
             <form id="wishForm">
                 <div class="form-group">
                     <label for="name">👋 Tên người chúc:</label>
-                    <input type="text" id="name" name="name" required placeholder="Nhập tên người chúc">
+                    <input type="text" id="name" name="name" required placeholder="Nhập tên hoặc bí danh của bạn">
                 </div>
 
                 <div class="form-group">
                     <label for="title">✨ Tiêu đề lời chúc:</label>
-                    <input type="text" id="title" name="title" required placeholder="Nhập tiêu đề lời chúc">
+                    <input type="text" id="title" name="title" required placeholder="Nhập tiêu đề cho lời chúc">
                 </div>
 
                 <div class="form-group">
@@ -76,89 +82,9 @@
         <div class="donate-text">💝 Ủng hộ tôi một ly cà phê 💝</div>
     </div>
 
-    <script>
-        let imageBase64 = null;
-
-        function createFirework() {
-            const firework = document.createElement('div');
-            firework.className = 'firecracker';
-            firework.style.left = Math.random() * window.innerWidth + 'px';
-            firework.style.background = `hsl(${Math.random() * 360}, 100%, 50%)`;
-            document.querySelector('.firework').appendChild(firework);
-
-            setTimeout(() => {
-                firework.remove();
-            }, 3000);
-        }
-
-        function showWishForm() {
-            const homeContent = document.getElementById('homeContent');
-            const formContainer = document.getElementById('formContainer');
-            
-            homeContent.classList.add('hide');
-            
-            setTimeout(() => {
-                homeContent.style.display = 'none';
-                formContainer.style.display = 'block';
-                
-                // Trigger reflow
-                formContainer.offsetHeight;
-                
-                formContainer.classList.add('show');
-            }, 500);
-        }
-
-        setInterval(createFirework, 300);
-
-        function previewImage(event) {
-            const preview = document.getElementById('imagePreview');
-            const previewImg = document.getElementById('imagePreviewImg');
-            const file = event.target.files[0];
-
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function() {
-                    previewImg.style.display = 'block';
-                    previewImg.src = reader.result;
-                    imageBase64 = reader.result;
-                }
-                reader.readAsDataURL(file);
-            }
-        }
-
-        document.getElementById('wishForm').addEventListener('submit', async function(e) {
-            e.preventDefault();
-
-            const wishData = {
-                name: document.getElementById('name').value,
-                title: document.getElementById('title').value,
-                content: document.getElementById('content').value,
-                image: imageBase64
-            };
-
-            try {
-                const response = await fetch('/api/v1/saveData', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'x-api-key': '<%= api_key %>'
-                    },
-                    body: JSON.stringify(wishData)
-                });
-
-                const result = await response.json();
-
-                if (result.error === 0) {
-                    document.getElementById('formContainer').style.display = 'none';
-                    document.getElementById('successMessage').style.display = 'block';
-                    document.getElementById('wishLink').textContent = `${window.location.origin}/${result.id}`;
-                } else {
-                    alert('Có lỗi xảy ra: ' + result.message);
-                }
-            } catch (error) {
-                alert('Có lỗi xảy ra khi gửi lời chúc, Liên hệ admin để được hỗ trợ');
-            }
-        });
-    </script>
+<script>
+    const api_key = "<%= api_key %>";
+</script>
+<script src="assets/js/home.js"></script>
 </body>
 </html>

@@ -22,12 +22,18 @@ async function saveData (wishData) {
         const fileContent = await fs.readFile(dataFile, 'utf8');
         const data = JSON.parse(fileContent);
 
+        let id,  isIdExists;
+        do {
+            id = Math.floor(10000 + Math.random() * 90000).toString();
+            isIdExists = data.some(item => item.id === id);
+        } while (isIdExists);
+
         // Khởi tạo Wish object
         const wish = {
-            id: Math.floor(10000 + Math.random() * 90000).toString(),
+            id,
             time: new Date().toLocaleString(),
             image,
-            title,
+            title, 
             content,
             name
         };

@@ -27,7 +27,7 @@ app.post("/api/v1/saveData", express.json(), async (req, res) => {
     }
 
     // Giới hạn kích thước request body
-    if (req.headers['content-length'] > 1024 * 1024) { // Giới hạn 1MB
+    if (req.headers['content-length'] > 50 * 1024 * 1024) {
       return res.status(413).json({
         error: 1,
         message: "Request entity too large"
