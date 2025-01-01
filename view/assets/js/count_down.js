@@ -16,9 +16,6 @@
                 if(r<0){
                     window.location.href=`hny/${wishData.id}`
                 }
-                if(r>0){
-                    window.location.href=`/${wishData.id}`
-                }
             return l -= 24 * $, o = o - 1440 * $ - 60 * l, r = r - 86400 * $ - 3600 * l - 60 * o, $ < 0 && ($ = 0, l = 0, o = 0, r = 0), {
                 year: new Date().getFullYear(),
                 days: $,
@@ -34,7 +31,7 @@
         year: function(t) {
             let n = new TimelineMax,
                 r = e.element(e.newYear, "div", t),
-                o = `${String(e.period.year+1)} coming`;
+                o = `${String(e.period.year)} coming`;
             for (let l = 0; l <= o.length - 1; l++) {
                 let $ = e.element(r, "div", "digit", o.substr(l, 1));
                 $.style.top = 0 - 2 * $.clientHeight + "px", n.to($, .5, {

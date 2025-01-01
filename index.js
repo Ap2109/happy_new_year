@@ -1,4 +1,5 @@
 const express = require("express");
+const fileUpload = require('express-fileupload');
 const path = require('path');
 const { saveData, getData } = require('./database')
 require('dotenv').config();
@@ -12,10 +13,11 @@ const api_key = process.env.API_KEY || "key_is_tho493"
 app.use(express.static('view'))
 app.set('view engine', 'ejs');
 app.set('views', __dirname + '/view')
+app.use(fileUpload());
 
 // Routes
 // API
-app.post("/api/v1/saveData", express.json(), async (req, res) => {
+app.post("/api/v1/saveData", async (req, res) => {
   try {
     // Kiểm tra header API key
     const apiKey = req.headers['x-api-key'];
@@ -26,10 +28,18 @@ app.post("/api/v1/saveData", express.json(), async (req, res) => {
       });
     }
 
-    const { name, title, content, image } = req.body;
-    
+    if (!req.files || !req.files.image) {
+      return res.status(400).json({
+        error: 1,
+        message: "Thiếu file hình ảnh"
+      });
+    }
+
+    const { name, title, content } = req.body;
+    const imageFile = req.files.image;
+
     // Validate input
-    if (!name || !title || !content || !image) {
+    if (!name || !title || !content) {
       return res.status(400).json({
         error: 1,
         message: "Thiếu thông tin cần thiết"
@@ -44,18 +54,36 @@ app.post("/api/v1/saveData", express.json(), async (req, res) => {
       });
     }
 
-    // Validate định dạng image base64
-    if (!image.match(/^data:image\/(png|jpg|jpeg);base64,/)) {
+    // Validate image file
+    if (!imageFile.mimetype.startsWith('image/')) {
       return res.status(400).json({
         error: 1,
-        message: "Định dạng ảnh không hợp lệ"
+        message: "File không phải là hình ảnh"
       });
     }
 
-    const result = await saveData({ name, title, content, image });
+    // Tạo tên file ngẫu nhiên để tránh trùng lặp
+    const fileName = Date.now() + '-' + Math.round(Math.random() * 1E9) + path.extname(imageFile.name);
+    const uploadDir = path.join(__dirname, 'view', 'uploads');
+    const uploadPath = path.join(uploadDir, fileName);
+
+    // Create uploads directory if it doesn't exist
+    if (!require('fs').existsSync(uploadDir)) {
+      require('fs').mkdirSync(uploadDir, { recursive: true });
+    }
+
+    // Save uploaded file
+    await imageFile.mv(uploadPath);
+    const imageToSave = `/uploads/${fileName}`;
+
+    const result = await saveData({ name, title, content, image: imageToSave });
     
     if (result.error !== 0) {
-      return res.status(500).json(result);
+      // Xóa file ảnh nếu lưu dữ liệu thất bại
+      if (require('fs').existsSync(uploadPath)) {
+        require('fs').unlinkSync(uploadPath);
+      }
+      return res.status(400).json(result);
     }
 
     return res.status(200).json({
@@ -74,7 +102,7 @@ app.post("/api/v1/saveData", express.json(), async (req, res) => {
 
 app.get("/api/v1/getData/:id", async (req, res) => {
   try {
-    // Kiểm tra header API key
+    // Check API key
     const apiKey = req.headers['x-api-key'];
     if (!apiKey || apiKey !== process.env.API_KEY) {
       return res.status(401).json({
@@ -83,15 +111,7 @@ app.get("/api/v1/getData/:id", async (req, res) => {
       });
     }
 
-    // Validate ID parameter
     const id = req.params.id;
-    if (!id || !/^\d{5}$/.test(id)) {
-      return res.status(400).json({
-        error: 1,
-        message: "Invalid ID format"
-      });
-    }
-
     const result = await getData(id);
 
     if (result.error !== 0) {
