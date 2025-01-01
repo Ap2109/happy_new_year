@@ -1,5 +1,6 @@
 const express = require("express");
 const fileUpload = require('express-fileupload');
+const cloudinary = require('cloudinary').v2;
 const path = require('path');
 const { saveData, getData } = require('./database')
 require('dotenv').config();
@@ -14,6 +15,13 @@ app.use(express.static('view'))
 app.set('view engine', 'ejs');
 app.set('views', __dirname + '/view')
 app.use(fileUpload());
+
+// Upload to Cloudinary for persistent storage
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET
+});
 
 // Routes
 // API
@@ -62,27 +70,30 @@ app.post("/api/v1/saveData", async (req, res) => {
       });
     }
 
-    // Tạo tên file ngẫu nhiên để tránh trùng lặp
-    const fileName = Date.now() + '-' + Math.round(Math.random() * 1E9) + path.extname(imageFile.name);
-    const uploadDir = path.join(__dirname, 'view', 'uploads');
-    const uploadPath = path.join(uploadDir, fileName);
+    // Tạo tên file ngẫu nhiên
+    // const fileName = Date.now() + '-' + Math.round(Math.random() * 1E9) + path.extname(imageFile.name);
 
-    // Create uploads directory if it doesn't exist
-    if (!require('fs').existsSync(uploadDir)) {
-      require('fs').mkdirSync(uploadDir, { recursive: true });
-    }
+    // Upload file buffer to Cloudinary
+    const uploadResult = await new Promise((resolve, reject) => {
+      const uploadStream = cloudinary.uploader.upload_stream(
+        { folder: 'uploads' },
+        (error, result) => {
+          if (error) reject(error);
+          else resolve(result);
+        }
+      );
+      
+      uploadStream.end(imageFile.data);
+    });
 
-    // Save uploaded file
-    await imageFile.mv(uploadPath);
-    const imageToSave = `/uploads/${fileName}`;
-
+    // Lưu đường dẫn của ảnh
+    const imageToSave = uploadResult.secure_url;
+    
     const result = await saveData({ name, title, content, image: imageToSave });
     
     if (result.error !== 0) {
-      // Xóa file ảnh nếu lưu dữ liệu thất bại
-      if (require('fs').existsSync(uploadPath)) {
-        require('fs').unlinkSync(uploadPath);
-      }
+      // Xóa ảnh nếu lỗi
+      await cloudinary.uploader.destroy(uploadResult.public_id);
       return res.status(400).json(result);
     }
 
