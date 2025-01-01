@@ -1,0 +1,266 @@
+ * {
+     margin: 0;
+     padding: 0;
+     box-sizing: border-box;
+ }
+
+ body {
+     font-family: 'Arial', sans-serif;
+     background: linear-gradient(135deg, #1a1a1a 0%, #4a4a4a 100%);
+     color: #fff;
+     min-height: 100vh;
+     display: flex;
+     flex-direction: column;
+     align-items: center;
+     padding: 20px;
+     position: relative;
+     overflow-x: hidden;
+ }
+
+ .container {
+     max-width: 800px;
+     text-align: center;
+     z-index: 1;
+ }
+
+ h1 {
+     font-size: 2.5em;
+     margin: 20px 0;
+     color: #f1c40f;
+     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+ }
+
+ .lunar-year {
+     font-size: 1.8em;
+     color: #e74c3c;
+     margin: 15px 0;
+     font-weight: bold;
+ }
+
+ .description {
+     font-size: 1.2em;
+     line-height: 1.6;
+     margin: 20px 0;
+     color: #ecf0f1;
+ }
+
+ .cta-button {
+     display: inline-block;
+     padding: 15px 30px;
+     font-size: 1.2em;
+     background: #e74c3c;
+     color: white;
+     text-decoration: none;
+     border-radius: 25px;
+     margin: 20px 0;
+     transition: transform 0.3s, background 0.3s;
+     border: none;
+     cursor: pointer;
+ }
+
+ .cta-button:hover {
+     background: #c0392b;
+     transform: scale(1.05);
+ }
+
+ .form-container {
+     display: none;
+     width: 100%;
+     max-width: 800px;
+     margin-top: 20px;
+     transform: scale(0);
+     transition: transform 0.5s ease-in-out;
+ }
+
+ .form-container.show {
+     transform: scale(1);
+ }
+
+ .form-group {
+     margin: 20px 0;
+     text-align: left;
+ }
+
+ .form-group label {
+     display: block;
+     margin-bottom: 8px;
+     font-size: 1.1em;
+     color: #f1c40f;
+ }
+
+ .form-group input,
+ .form-group textarea {
+     width: 100%;
+     padding: 12px;
+     border: 2px solid #e74c3c;
+     border-radius: 8px;
+     background: rgba(255, 255, 255, 0.1);
+     color: #fff;
+     font-size: 1em;
+ }
+
+ .form-group textarea {
+     height: 150px;
+     resize: vertical;
+ }
+
+ .form-group input[type="file"] {
+     padding: 8px;
+ }
+
+ .image-preview {
+     margin-top: 10px;
+     max-width: 300px;
+     margin: 10px auto;
+ }
+
+ .image-preview img {
+     max-width: 100%;
+     border-radius: 8px;
+     display: none;
+ }
+
+ .lantern {
+     position: absolute;
+     width: 50px;
+     height: 70px;
+     background: #e74c3c;
+     border-radius: 25px;
+     box-shadow: 0 0 20px rgba(231, 76, 60, 0.6);
+     animation: swing 3s infinite ease-in-out;
+ }
+
+ .lantern::before {
+     content: '';
+     position: absolute;
+     top: -10px;
+     left: 20px;
+     width: 10px;
+     height: 10px;
+     background: #f1c40f;
+     border-radius: 50%;
+ }
+
+ @keyframes swing {
+
+     0%,
+     100% {
+         transform: rotate(-5deg);
+     }
+
+     50% {
+         transform: rotate(5deg);
+     }
+ }
+
+ .firework {
+     position: fixed;
+     top: 0;
+     left: 0;
+     width: 100%;
+     height: 100%;
+     pointer-events: none;
+     z-index: 0;
+ }
+
+ .firecracker {
+     position: absolute;
+     width: 5px;
+     height: 5px;
+     border-radius: 50%;
+     animation: explode 3s ease-out forwards;
+ }
+
+ @keyframes explode {
+     0% {
+         transform: translateY(100vh) scale(0);
+         opacity: 1;
+     }
+
+     50% {
+         transform: translateY(50vh) scale(1);
+         opacity: 1;
+     }
+
+     100% {
+         transform: translateY(0) scale(0);
+         opacity: 0;
+     }
+ }
+
+ #successMessage {
+     display: none;
+     background: rgba(0, 0, 0, 0.8);
+     padding: 20px;
+     border-radius: 10px;
+     margin-top: 20px;
+ }
+
+ #wishLink {
+     word-break: break-all;
+     font-weight: bold;
+ }
+
+ .home-content {
+     display: block;
+     transition: opacity 0.5s ease-in-out;
+ }
+
+ .home-content.hide {
+     opacity: 0;
+ }
+ .donate-box {
+     position: fixed;
+     bottom: 2vw;
+     right: 2vw;
+     background: rgba(0, 0, 0, 0.8);
+     padding: 1.5vw;
+     border-radius: 1vw;
+     text-align: center;
+     z-index: 1000;
+ }
+
+ .donate-box img {
+     width: 16.67vw;
+     height: 16.67vw;
+     margin-bottom: 1vw;
+ }
+
+ .donate-text {
+     color: #f1c40f;
+     font-size: 0.9vw;
+     margin-top: 0.5vw;
+ }
+
+ @media (max-width: 600px) {
+     h1 {
+         font-size: 2em;
+     }
+
+     .lunar-year {
+         font-size: 1.5em;
+     }
+
+     .description {
+         font-size: 1em;
+     }
+
+     .cta-button {
+         padding: 12px 24px;
+     }
+
+     .form-group input,
+     .form-group textarea {
+         font-size: 0.9em;
+     }
+
+     .donate-box {
+         bottom: 2vw;
+         right: 2vw;
+     }
+
+     .donate-box img {
+         width: 16.67vw; /* Assuming 100px is 16.67% of the viewport width */
+         height: 16.67vw; /* Assuming 100px is 16.67% of the viewport height */
+     }
+ }

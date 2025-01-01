@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tạo Lời Chúc Năm Mới 2025</title>
+    <link rel="stylesheet" href="assets/css/home.css">
+</head>
+<body>
+    <div class="firework"></div>
+    <div class="lantern" style="top: 20px; left: 20px;"></div>
+    <div class="lantern" style="top: 20px; right: 20px;"></div>
+
+    <div class="container">
+        <div class="home-content" id="homeContent">
+            <h1>🎊 Chào Mừng Năm Mới 2025 🎊</h1>
+            <div class="lunar-year">Năm Ất Tỵ</div>
+            
+            <p class="description">
+                Hãy gửi những lời chúc tốt đẹp nhất đến người thân yêu của bạn trong năm mới này. 
+                Tạo một thiệp chúc mừng năm mới độc đáo và ý nghĩa để gửi tới những người special trong cuộc đời bạn.
+            </p>
+
+            <button onclick="showWishForm()" class="cta-button">
+                🎋 Tạo Lời Chúc Ngay 🎋
+            </button>
+
+            <p class="description">
+                Năm mới Ất Tỵ 2025 đang đến gần! <br>
+                Hãy là người đầu tiên gửi những lời chúc tốt đẹp nhất đến người thân và bạn bè! ❤️
+            </p>
+        </div>
+
+        <div class="form-container" id="formContainer">
+            <h1>🎊 Tạo Lời Chúc Năm Mới 🎊</h1>
+            <div class="lunar-year">Năm Ất Tỵ 2025</div>
+
+            <form id="wishForm">
+                <div class="form-group">
+                    <label for="name">👋 Tên người chúc:</label>
+                    <input type="text" id="name" name="name" required placeholder="Nhập tên người chúc">
+                </div>
+
+                <div class="form-group">
+                    <label for="title">✨ Tiêu đề lời chúc:</label>
+                    <input type="text" id="title" name="title" required placeholder="Nhập tiêu đề lời chúc">
+                </div>
+
+                <div class="form-group">
+                    <label for="content">🎋 Nội dung lời chúc:</label>
+                    <textarea id="content" name="content" required placeholder="Nhập nội dung lời chúc năm mới"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="image">🖼️ Hình ảnh của người nhận:</label>
+                    <input type="file" id="image" name="image" required accept="image/*" onchange="previewImage(event)">
+                    <div class="image-preview" id="imagePreview">
+                        <img id="imagePreviewImg" src="" alt="Preview">
+                    </div>
+                </div>
+
+                <button type="submit" class="cta-button">🎉 Gửi Lời Chúc 🎉</button>
+            </form>
+        </div>
+
+        <div id="successMessage">
+            <h2 style="color: #e74c3c;">🎉 Chúc mừng! Lời chúc của bạn đã được tạo thành công! 🎉</h2>
+            <p style="font-size: 18px; margin: 20px 0;">Link lời chúc của bạn là:</p>
+            <div id="wishLink" style="padding: 15px; background: #f1c40f; border-radius: 8px; margin: 10px 0;"></div>
+            <p style="font-size: 16px; color: #7f8c8d;">Hãy copy link trên và gửi cho người thân yêu của bạn nhé! ❤️</p>
+        </div>
+    </div>
+
+    <div class="donate-box">
+        <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=00020101021138620010A00000072701320006970454011899MM24044M620822530208QRIBFTTA53037045802VN62190515MOMOW2W620822536304AABA" alt="Mã QR Ủng hộ">
+        <div class="donate-text">💝 Ủng hộ tôi một ly cà phê 💝</div>
+    </div>
+
+    <script>
+        let imageBase64 = null;
+
+        function createFirework() {
+            const firework = document.createElement('div');
+            firework.className = 'firecracker';
+            firework.style.left = Math.random() * window.innerWidth + 'px';
+            firework.style.background = `hsl(${Math.random() * 360}, 100%, 50%)`;
+            document.querySelector('.firework').appendChild(firework);
+
+            setTimeout(() => {
+                firework.remove();
+            }, 3000);
+        }
+
+        function showWishForm() {
+            const homeContent = document.getElementById('homeContent');
+            const formContainer = document.getElementById('formContainer');
+            
+            homeContent.classList.add('hide');
+            
+            setTimeout(() => {
+                homeContent.style.display = 'none';
+                formContainer.style.display = 'block';
+                
+                // Trigger reflow
+                formContainer.offsetHeight;
+                
+                formContainer.classList.add('show');
+            }, 500);
+        }
+
+        setInterval(createFirework, 300);
+
+        function previewImage(event) {
+            const preview = document.getElementById('imagePreview');
+            const previewImg = document.getElementById('imagePreviewImg');
+            const file = event.target.files[0];
+
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function() {
+                    previewImg.style.display = 'block';
+                    previewImg.src = reader.result;
+                    imageBase64 = reader.result;
+                }
+                reader.readAsDataURL(file);
+            }
+        }
+
+        document.getElementById('wishForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            const wishData = {
+                name: document.getElementById('name').value,
+                title: document.getElementById('title').value,
+                content: document.getElementById('content').value,
+                image: imageBase64
+            };
+
+            try {
+                const response = await fetch('/api/v1/saveData', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'x-api-key': '<%= api_key %>'
+                    },
+                    body: JSON.stringify(wishData)
+                });
+
+                const result = await response.json();
+
+                if (result.error === 0) {
+                    document.getElementById('formContainer').style.display = 'none';
+                    document.getElementById('successMessage').style.display = 'block';
+                    document.getElementById('wishLink').textContent = `${window.location.origin}/${result.id}`;
+                } else {
+                    alert('Có lỗi xảy ra: ' + result.message);
+                }
+            } catch (error) {
+                alert('Có lỗi xảy ra khi gửi lời chúc, Liên hệ admin để được hỗ trợ');
+            }
+        });
+    </script>
+</body>
+</html>

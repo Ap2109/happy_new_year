@@ -5,10 +5,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="user-scalable=0">
   <meta property="og:type" content="website" />
-  <meta property="og:description" content="Chúc mừng năm mới">
-  <meta name="description" content="Chúc mừng năm mới">
+  <meta property="og:description" content="Trang web chúc mừng năm mới 2025.">
+  <meta name="description" content="Gửi những lời chúc tới người thân, bạn bè yêu quý.">
 
-  <title>HAPPY NEW YEAR</title>
+  <title>Chúc mừng năm mới 2025</title>
 
   <link rel="stylesheet" href="assets/css/self.css">
   <link rel="stylesheet" href="assets/css/count_down.css">
@@ -44,6 +44,16 @@
     </div>
   </div>
 
+  <script>
+    const wishData = {
+      id: '<%= data.id %>',
+      time: '<%= data.time %>',
+      name: '<%= data.name %>',
+      image: '<%= data.image %>',
+      title: '<%= data.title %>',
+      content: '<%= data.content %>'
+    };
+  </script>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.0.2/TweenMax.min.js"></script>
   <script src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/329180/fscreen%401.0.1.js"></script>

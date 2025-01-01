@@ -1809,7 +1809,7 @@ body{
     width: 250px;
     height: 80px;
     overflow: hidden; 
-    margin-left: 150px;  
+    margin-left: 150px;
 }
 .box-content .right .content h3{
     font-size: 18px;
@@ -1817,7 +1817,7 @@ body{
     padding: 20px 0px 0px 20px;
     margin-top: -50px;
 }
-.slider3:hover .content h3{
+.slider3:hover .content h3 {
     animation: fixedContent 2s 2s forwards;
 }
 @keyframes fixedContent{
@@ -1916,85 +1916,71 @@ body{
     .slider1 img{
         width: 100%;
         height: 100%;
+        object-fit: cover;
     }
     .box-slider-img2 .slider-img2{
-        top: 100px;
-        left: 10px;
-        width: 100px;
+        top: 15vh;
+        left: 5vw;
+        width: 25vw;
+        max-width: 100px;
     }
     .box-slider-img2 .slider-img2::before{
         width: 60px;
         height: 60px;
     }
-    .box-slider-img3 .slider-img3{
-        width: 100px;
-        top: 80px;
-        left: 0px;
+    .box-slider-img3 .slider-img3,
+    .box-slider-img4 .slider-img4,
+    .box-flower{
         display: none;
-    }
-    .box-slider-img3 .slider-img3::before{
-        width: 70px;
-        height: 70px;
-    }
-    .box-slider-img4 .slider-img4{
-        width: 100px;
-        top: 80px;
-        right: 30px;
-        display: none;
-    }
-    .box-slider-img4 .slider-img4::before{
-        width: 60px;
-        height: 60px;
     }
     .box-slider-img5 .slider-img5{
-        width: 100px;
-        right: 10px;
+        width: 25vw;
+        max-width: 100px;
+        right: 5vw;
     }
     .box-slider-img5 .slider-img5::before{
         width: 60px;
         height: 60px;
     }
     .textHappynewyear{
-        width: 280px;
+        width: 80vw;
+        max-width: 280px;
     }
     .textHappynewyear .box-span span{
         width: 50px;
         height: 50px;
     }
-    .textHappynewyear .box-span:nth-child(1) span::after{
-        font-size: 23px;
-    }
-    .textHappynewyear .box-span:nth-child(2) span::after{
-        font-size: 23px;
-    }
-    .textHappynewyear .box-span:nth-child(3) span::after{
-        font-size: 23px;
-    }
-    .textHappynewyear .box-span:nth-child(4) span::after{
+    .textHappynewyear .box-span span::after{
         font-size: 23px;
     }
     .slider1 .box-slider_img1 .slider-img1{
-        width: 280px;
+        width: 80vw;
+        max-width: 280px;
         z-index: 100000;
     }
     .slider1 .slider-img1 img{
         width: 100%;
     }
     .slider1 .box-slider_img1 .slider-img1::before{
-        width: calc(100% -50px);
+        width: calc(100% - 50px);
     }
     .circle span{
-        width: 300px;
-        height: 300px;
+        width: 80vw;
+        height: 80vw;
+        max-width: 300px;
+        max-height: 300px;
     }
     .cat img{
-        width: 130px;
+        width: 35vw;
+        max-width: 130px;
         margin-top: -30px;
     }
     .box-lion_dance .lion_dance1{
-        width: 170px;
-        top: 400px;
-        right: 20px;
+        width: 45vw;
+        max-width: 170px;
+        bottom: 20vh;
+        right: 5vw;
+        top: auto;
         z-index: 100000;
     }
     .box-lion_dance .lion_dance1::before{
@@ -2002,135 +1988,144 @@ body{
         bottom: 40px;
     }
     .box-lion_dance .lion_dance2{
-        width: 180px;
-        top: 415px;
-        left: 20px;
+        width: 48vw;
+        max-width: 180px;
+        bottom: 18vh;
+        left: 5vw;
+        top: auto;
         z-index: 100000;
     }
     .box-lion_dance .lion_dance2::before{
         width: 80px;
         bottom: 25px;
     }
-    .box-flower{
-        display: none;
-    }
     .number2023{
         top: 60%;
-        font-size: 65px;
+        font-size: clamp(40px, 8vw, 65px);
     }
     .box-button{
         top: 80%;
     }
     .slider2 .rhombus:nth-child(1){
-        width: 306px;
-        height: 280px;
+        width: 85vw;
+        height: 77vw;
+        max-width: 306px;
+        max-height: 280px;
     }
     .slider2 .rhombus:nth-child(2){
-        width: 230px;
-        height: 204px;
+        width: 64vw;
+        height: 57vw;
+        max-width: 230px;
+        max-height: 204px;
     }
     .rhombus-img{
-        width: 170px;
-        height: 170px;
+        width: 47vw;
+        height: 47vw;
+        max-width: 170px;
+        max-height: 170px;
     }
     .mail{
         margin-top: 370px;
-        z-index: 1000000000000000;
+        z-index: 1000;
     }
     .slider3 .box-content{
         width: 100%;
+        padding: 0 15px;
     }
-.box-circle_left .circle_left{
-    width: 200px;
+    .box-circle_left .circle_left{
+        width: 55vw;
+        max-width: 200px;
+    }
+    .box-circle_left .circle_left::before{
+        width: 50vw;
+        height: 50vw;
+        max-width: 180px;
+        max-height: 180px;
+    }
+    .text-content{
+        text-align: center;
+    }
+    .text-content h2{
+        font-size: clamp(13px, 3vw, 15px);
+    }
+    .text-content h1{
+        font-size: clamp(16px, 4vw, 19px);
+    }
+    .text-content span{
+        font-size: clamp(20px, 5vw, 25px);
+    }
+    .box-big_flowers img{
+        max-width: 70px;
+    }
+    .box-big_flowers img:nth-child(1){
+        width: 8vw;
+        top: 30px;
+        right: 30px;
+    }
+    .box-big_flowers img:nth-child(2){
+        width: 8vw;
+        left: 0;
+    }
+    .box-big_flowers img:nth-child(3){
+        width: 11vw;
+        left: 70px;
+    }
+    .box-big_flowers img:nth-child(4),
+    .box-big_flowers img:nth-child(6){
+        width: 19vw;
+    }
+    .box-big_flowers img:nth-child(7){
+        width: 8vw;
+        right: 60px;
+    }
+    .apricot_blossom img:nth-child(1){
+        width: 5vw;
+        max-width: 20px;
+        left: 100px;
+    }
+    .slider3 .right .content{
+        padding: 15px;
+    }
+    .slider3 .right .content .title{
+        height: 25px;
+    }
+    .slider3 .right .content h1{
+        font-size: clamp(16px, 4vw, 20px);
+    }
+    .box-content .right .content p{
+        font-size: clamp(13px, 3vw, 15px);
+    }
+    .box-content .right .content .fixedContent{
+        width: 80vw;
+        max-width: 200px;
+        margin: 0 auto;
+    }
+    .box-content .right .content .fixedContent h3{
+        font-size: clamp(13px, 3vw, 15px);
+    }
 }
-.box-circle_left .circle_left::before{
-    width: 180px;
-    height: 180px;
-}
-.text-content h2{
-    font-size: 15px;
-}
-.text-content h1{
-    font-size: 19px;
-}
-.text-content span{
-    font-size: 25px;
-}
-.box-big_flowers img:nth-child(1){
-    width: 30px;
-    top: 30px;
-    right: 30px;
-}
-.box-big_flowers img:nth-child(2){
-    width: 30px;
-    left: 0px;
-}
-.box-big_flowers img:nth-child(3){
-    width: 40px;
-    left: 70px;
-}
-.box-big_flowers img:nth-child(4){
-    width: 70px;
-}
-.box-big_flowers img:nth-child(6){
-    width: 70px;
-    left: 20px;
-}
-.box-big_flowers img:nth-child(7){
-    width: 30px;
-    right: 60px;
-}
-.apricot_blossom img:nth-child(1){
-    width: 20px;
-    left: 100px;
-}
-.slider3 .right .content .title{
-    height: 25px;
-}
-.slider3 .right .content h1{
-    font-size: 20px;
-}
-.box-content .right .content p{
-    font-size: 15px;
-}
-.box-content .right .content .fixedContent{
-    width: 200px;
-    margin-left: 50px;
-}
-.box-content .right .content .fixedContent h3{
-   font-size: 15px;
-}
- }
 
-
- @media screen and (max-width: 390px){
+@media screen and (max-width: 390px){
     .box-lion_dance .lion_dance1{
-        top: 550px;
+        bottom: 15vh;
         z-index: 100000;
         right: 0;
+        top: auto;
     }
     .box-lion_dance .lion_dance2{
-        top: 565px;
+        bottom: 13vh;
         z-index: 100000;
         left: 0;
+        top: auto;
     }
     .box-button{
         top: 90%;
     }
     .number2023{
-        font-size: 50px;
+        font-size: 40px;
         top: 58%;
     }
-    .number2023 .number:nth-child(1){
+    .number2023 .number{
         top: -600px;
     }
-    .number2023 .number:nth-child(2){
-        top: -600px;
-    }
-    .number2023 .number:nth-child(3){
-        top: -600px;
-    }
-    .number2023 .number:nth-child(4){
-        top: -600px;
-    }
- }
+}

@@ -1,15 +1,17 @@
 {
-  "name": "web",
-  "version": "1.0.0",
-  "description": "A packaged",
+  "name": "web_happy_new_year",
+  "version": "2.0.0",
+  "description": "Trang web chúc mừng năm mới",
   "scripts": {
     "start": "node index.js"
   },
   "engines": {
-    "node": "18.x"
+    "node": ">=20.0.0"
   },
   "dependencies": {
-    "express": "^4.18.1",
-    "path": "^0.12.7"
+    "express": "",
+    "path": "",
+    "ejs": "",
+    "dotenv": ""
   }
 }
