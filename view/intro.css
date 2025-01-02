@@ -1514,15 +1514,15 @@ body{
 }
 .box-content{
     position: relative;
-    width: 800px;
-    height: 500px;
+    width: 2000px;
+    height: 800px;
     display: flex;
     overflow: hidden;
     background: linear-gradient(360deg,rgb(206, 19, 53) 0%, rgb(199, 20, 53) 100%);
 }
 .box-content .left{
     position: relative;
-    width: 50%;
+    width: 30%;
     height: 100%;
     border-right: 1px solid rgb(0, 0, 0, 0.2);
     box-shadow: 0 0 5px rgb(0, 0, 0, 0.5);
@@ -1744,7 +1744,7 @@ body{
 }
 .box-content .right{
     position: relative;
-    width: 50%;
+    width: 90%;
     height: 100%;
     right: 0;
     display: flex;
@@ -2134,3 +2134,72 @@ body{
         top: -600px;
     }
  }
+ .image-grid {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Căn giữa các hàng */
+}
+
+.image-row {
+    display: flex;
+    justify-content: center; /* Căn giữa các ảnh trong hàng */
+    margin-bottom: 10px; /* Khoảng cách giữa các hàng */
+}
+
+.image-row img {
+    width: 400px; /* Đặt chiều rộng cho ảnh */
+    height: 300px; /* Đặt chiều cao cho ảnh */
+    object-fit: cover; /* Đảm bảo ảnh không bị méo */
+    margin: 0 8px; /* Khoảng cách giữa các ảnh */
+    border: solid;
+}
+.fade-in {
+    opacity: 0;
+    transition: opacity 3s ease-in-out;
+}
+
+.fade-in.show {
+    opacity: 2;
+}
+button:active {
+    transform: translateY(2px); /* Nút hạ xuống nhẹ khi nhấn */
+}
+
+/* Căn chỉnh riêng cho nút "Tiếp tục" */
+#next-button {
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    color: white;
+    background: linear-gradient(135deg, #36d1dc, #5b86e5);
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease-in-out;
+}
+
+
+#previos-button:hover {
+    background: linear-gradient(135deg, #5b86e5, #36d1dc); /* Đảo ngược gradient */
+}
+#image-box {
+    display: flex; /* Kích hoạt Flexbox */
+    align-items: center; /* Căn giữa theo chiều dọc */
+    justify-content: center; /* Căn giữa theo chiều ngang */
+    height: 100%; /* Đảm bảo toàn bộ chiều cao */
+}
+
+/* Thiết lập cho nút "Trở về" */
+#previos-button {
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    color: white;
+    background: linear-gradient(135deg, #36d1dc, #5b86e5);
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease-in-out;
+}

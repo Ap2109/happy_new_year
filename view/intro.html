@@ -3,15 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <link rel="website icon" type="png" href="image/rong.png">
+    <link rel="website icon" type="png" href="image/snake.png">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="intro.css">
     <title>Happy New Year</title>
 </head>
 <body>
+    
     <div class="box-slider">
         <div class="slider1">
+
             <img src="image/bgr.jpg" alt="">
             <div class="happynewyear">
                 <div class="textHappynewyear">
@@ -213,7 +215,7 @@
                         <img src="image/apricot-blossom.png" alt="">
                     </div>
                 </div>
-                <div class="right">
+                <div class="right" id="message-box">
                     <div class="content">
                         <div class="title">
                             <h1 id="name-cua-em">&#129505Gửi Ngọc Ánh!</h1>
@@ -222,12 +224,25 @@
                             Năm 2023 là một năm đáng nhớ đối với tớ, và cậu cũng rất đặc biệt. Dù là ít ỏi thôi nhưng tớ cảm thấy rất vui vì điều đó. Mong cậu sẽ ngày càng vững vàng với ước mơ ngoài kia. Chúc cậu năm mới sẽ luôn hạnh phúc, luôn vui vẻ như lúc này vậy
                         </p>
                         <div class="fixedContent">
-                            <!-- <h3>Người gửi: Thọ</h3> -->
+                            
                             <h3>❤️</h3>
                         </div>
+                        <button id="next-button">Tiếp tục</button>
                     </div>
                 </div>
-            </div>
+                <div class="right" id="image-box" style="display:none;">
+                    <div class="image-grid">
+                        <div class="image-row">
+                            <img src="image/background.jpg" alt="Image 1" class="fade-in">
+                            <img src="image/bgr.jpg" alt="Image 2" class="fade-in">
+                        </div>
+                        <div class="image-row">
+                            <img src="image/lanterns.png" alt="Image 3" class="fade-in">
+                            <img src="image/big-clouds2.png" alt="Image 4" class="fade-in">
+                        </div>
+                    </div>
+                    <button id="previos-button">Trở về</button>
+                </div>
             <i class="fa-solid fa-xmark"></i>
         </div>
     </div>
@@ -237,7 +252,19 @@
     </audio>
 <!-- 
 <script src="./data.js"></script> -->
-
+<!-- <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const images = document.querySelectorAll('.fade-in');
+        let delay = 1;
+    
+        images.forEach((img, index) => {
+            setTimeout(() => {
+                img.classList.add('show');
+            }, delay);
+            delay += 10000; // Thay đổi giá trị này để điều chỉnh thời gian xuất hiện giữa các ảnh
+        });
+    });
+</script> -->
 <script>
     // get request GET name
     var urlParams = new URLSearchParams(window.location.search);
@@ -255,6 +282,31 @@
     }
 
 
+</script>
+<script>
+    document.getElementById("next-button").addEventListener("click", function () {
+        // Ẩn hộp tin nhắn và hiện hộp ảnh
+        document.getElementById("message-box").style.display = "none";
+        document.getElementById("image-box").style.display = "grid";
+    
+        // Bắt đầu hiệu ứng trình chiếu ảnh
+        const images = document.querySelectorAll('.fade-in');
+        let delay = 1000; // Thời gian trễ ban đầu (ms)
+    
+        images.forEach((img) => {
+            setTimeout(() => {
+                img.classList.add('show'); // Thêm lớp 'show' để kích hoạt hiệu ứng
+            }, delay);
+            delay += 2000; // Khoảng cách thời gian giữa các ảnh (ms)
+        });
+    });
+    
+</script>
+<script>
+    document.getElementById("previos-button").addEventListener("click", function() {
+        document.getElementById("message-box").style.display = "flex";
+        document.getElementById("image-box").style.display = "none";
+    });
 </script>
 <script src="./intro.js"></script>
 </body>

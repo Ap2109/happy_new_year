@@ -31,7 +31,7 @@
         year: function(t) {
             let n = new TimelineMax,
                 r = e.element(e.newYear, "div", t),
-                o = `${String(e.period.year+1)} coming`;
+                o = `${String(e.period.year)} coming`;
             for (let l = 0; l <= o.length - 1; l++) {
                 let $ = e.element(r, "div", "digit", o.substr(l, 1));
                 $.style.top = 0 - 2 * $.clientHeight + "px", n.to($, .5, {
