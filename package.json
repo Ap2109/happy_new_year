@@ -14,7 +14,7 @@
     "path": "",
     "ejs": "",
     "cloudinary": "",
-    "axios":"",
+    "firebase":"",
     "dotenv": ""
   }
 }

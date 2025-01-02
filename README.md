@@ -32,10 +32,12 @@ Hướng dẫn cài đặt và chạy project trên máy local.
 
 ### Yêu cầu
 
-Cần cài đặt các phần mềm sau:
+Cần có các tài khoản và dịch vụ sau:
 
 - Node.js và npm (Node Package Manager)
 - Git
+- Tài khoản Firebase và Realtime Database đã được tạo
+- Tài khoản Cloudinary để lưu trữ hình ảnh
 
 ### Cài đặt
 
@@ -57,13 +59,44 @@ Cần cài đặt các phần mềm sau:
    npm install
    ```
 
-4. Tạo file .env và thêm API key
+4. Tạo tài khoản và lấy thông tin API:
+
+   a. Cloudinary:
+
+   - Đăng ký tài khoản tại https://cloudinary.com
+   - Vào Dashboard để lấy Cloud name, API Key và API Secret
+   - Cloudinary URL sẽ có dạng: cloudinary://{api_key}:{api_secret}@{cloud_name}
+
+   b. Firebase:
+
+   - Truy cập https://console.firebase.google.com
+   - Tạo project mới
+   - Vào Project Overview > Add Web App (</>) để thêm ứng dụng web
+   - Đặt tên cho ứng dụng và click "Register app"
+   - Tải file cấu hình (firebaseConfig.json) về máy
+   - Tạo Realtime Database và copy URL database
+
+5. Tạo file .env và thêm các thông tin API
 
    ```
-   API_KEY=your_api_key_here
+   API_KEY=your_api_key_here (option)
+   # cloundinary
+   CLOUDINARY_CLOUD_NAME=your_cloud_name
+   CLOUDINARY_API_KEY=your_api_key
+   CLOUDINARY_API_SECRET=your_api_secret
+   CLOUDINARY_URL=your_cloudinary_url
+   # firebase
+   FIREBASE_APIKEY=your_firebase_api_key
+   authDomain=your_project_id.firebaseapp.com
+   databaseURL=your_database_url
+   projectId=your_project_id
+   storageBucket=your_project_id.appspot.com
+   messagingSenderId=your_messaging_sender_id
+   appId=your_app_id
+   measurementId=your_measurement_id
    ```
 
-5. Chạy project
+6. Chạy project
    ```sh
    npm start
    ```
@@ -98,7 +131,8 @@ Lưu ý: Lời chúc sẽ chỉ hiển thị sau thời khắc giao thừa, trư
 
 ## Contact
 
-Nguyễn Chí Thọ - [@tho493](https://facebook.com/tho493) - chitho040903@gmail.com
+Nguyễn Chí Thọ - [@tho493](https://facebook.com/tho493) - chitho040903@gmail.com - Leader
+Lê Đình Phúc - [Phucptit2003](https://www.facebook.com/phuc.in.12) - Co-Leader
 
 Project Link: [https://github.com/tho493/happy_new_year](https://github.com/tho493/happy_new_year)
 

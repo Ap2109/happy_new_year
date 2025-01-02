@@ -1,29 +1,32 @@
-const axios = require('axios');
+const { initializeApp } = require("firebase/app");
+const { getDatabase, ref, get, set } = require("firebase/database");
 require('dotenv').config();
 
-// JSONBin.io configuration
-const JSONBIN_API_KEY = process.env.JSONBIN_API_KEY;
-const BIN_ID = process.env.JSONBIN_BIN_ID;
-const JSONBIN_URL = `https://api.jsonbin.io/v3/b/${BIN_ID}`;
-
-const headers = {
-    'Content-Type': 'application/json',
-    'X-Master-Key': JSONBIN_API_KEY
+const firebaseConfig = {
+  apiKey: process.env.FIREBASE_APIKEY,
+  authDomain:  process.env.authDomain,
+  databaseURL:  process.env.databaseURL,
+  projectId:  process.env.projectId,
+  storageBucket:  process.env.storageBucket,
+  messagingSenderId:  process.env.messagingSenderId,
+  appId:  process.env.appId,
+  measurementId: process.env.measurementId
 };
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
 
 async function saveData(wishData) {
     try {
         const { image, title, content, name } = wishData;
 
-        // Get current data
-        const response = await axios.get(JSONBIN_URL, { headers });
-        const data = response.data.record || [];
-
-        let id, isIdExists;
+        // Generate unique ID
+        let id, snapshot;
         do {
             id = Math.floor(10000 + Math.random() * 90000).toString();
-            isIdExists = data.some(item => item.id === id);
-        } while (isIdExists);
+            snapshot = await get(ref(db, id));
+        } while (snapshot.exists());
 
         // Create new wish object
         const wish = {
@@ -35,9 +38,8 @@ async function saveData(wishData) {
             name
         };
 
-        // Add new wish and update bin
-        data.push(wish);
-        await axios.put(JSONBIN_URL, data, { headers });
+        // Save to Firebase
+        await set(ref(db, id), wish);
 
         return { "error": 0, "id": wish.id };
     } catch (error) {
@@ -47,9 +49,8 @@ async function saveData(wishData) {
 
 async function getData(id) {
     try {
-        const response = await axios.get(JSONBIN_URL, { headers });
-        const data = response.data.record || [];
-        const wish = data.find(g => g.id === id);
+        const snapshot = await get(ref(db, id));
+        const wish = snapshot.val();
 
         if (!wish) {
             return { "error": 1, "message": "Bạn đang truy cập một lời chúc không tồn tại", "data": "" };
