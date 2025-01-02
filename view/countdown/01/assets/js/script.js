@@ -8,8 +8,11 @@ function shuffle(t) {
     }
     return t
 }
-const typeWriterElement = document.getElementById("typewriter"),
-    textArray = [shuffle(arrayList)[0]];
+
+const TIME_WRITER = 2000;
+const typeWriterElement = document.getElementById("typewriter");
+const defaultMessage = "Năm mới sắp tới, lời chúc sắp được tiết lộ";
+const textArray = [defaultMessage];
 
 function delWriter(t, r, e) {
     r >= 0 ? (typeWriterElement.innerHTML = t.substring(0, r--), setTimeout(function() {

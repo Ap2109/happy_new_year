@@ -1,4 +1,5 @@
 let imageBase64 = null;
+let selectedTheme = '';
 
 function createFirework() {
     const firework = document.createElement('div');
@@ -12,19 +13,30 @@ function createFirework() {
     }, 3000);
 }
 
-function showWishForm() {
+function showThemeForm() {
     const homeContent = document.getElementById('homeContent');
-    const formContainer = document.getElementById('formContainer');
-    
+    const themeContainer = document.getElementById('themeContainer');
+
     homeContent.classList.add('hide');
-    
     setTimeout(() => {
         homeContent.style.display = 'none';
+        themeContainer.style.display = 'block';
+        themeContainer.classList.add('show');
+    }, 500);
+}
+
+function selectTheme(themeId) {
+    selectedTheme = themeId;
+    document.getElementById('selectedTheme').value = themeId;
+    
+    const themeContainer = document.getElementById('themeContainer');
+    const formContainer = document.getElementById('formContainer');
+
+    themeContainer.classList.remove('show');
+    document.getElementById("form-image").style.display = "none";
+    setTimeout(() => {
+        themeContainer.style.display = 'none';
         formContainer.style.display = 'block';
-        
-        // Trigger reflow
-        formContainer.offsetHeight;
-        
         formContainer.classList.add('show');
     }, 500);
 }
@@ -37,86 +49,124 @@ function previewImage(event) {
     const file = event.target.files[0];
 
     if (file) {
-        // Create an image element for compression
         const img = new Image();
         const reader = new FileReader();
 
-        reader.onload = function() {
-            img.src = reader.result;
-            img.onload = function() {
-                // Create canvas for compression
-                const canvas = document.createElement('canvas');
-                const ctx = canvas.getContext('2d');
+        reader.onload = function () {
+            if (reader.result) {
+                img.src = reader.result.toString();
+                img.onload = function () {
+                    const canvas = document.createElement('canvas');
+                    const ctx = canvas.getContext('2d');
 
-                // Calculate new dimensions (max width/height of 800px)
-                let width = img.width;
-                let height = img.height;
-                const maxSize = 800;
+                    if (!ctx) {
+                        console.error('Could not get canvas context');
+                        return;
+                    }
 
-                if (width > height && width > maxSize) {
-                    height = Math.round((height * maxSize) / width);
-                    width = maxSize;
-                } else if (height > maxSize) {
-                    width = Math.round((width * maxSize) / height);
-                    height = maxSize;
+                    let width = img.width;
+                    let height = img.height;
+                    const maxSize = 600;
+
+                    if (width > height && width > maxSize) {
+                        height = Math.round((height * maxSize) / width);
+                        width = maxSize;
+                    } else if (height > maxSize) {
+                        width = Math.round((width * maxSize) / height);
+                        height = maxSize;
+                    }
+
+                    canvas.width = width;
+                    canvas.height = height;
+                    ctx.drawImage(img, 0, 0, width, height);
+
+                    const compressedBase64 = canvas.toDataURL('image/jpeg', 0.6);
+
+                    if (previewImg) {
+                        previewImg.style.display = 'block';
+                        previewImg.setAttribute('src', compressedBase64);
+                        imageBase64 = compressedBase64;
+                    }
                 }
-
-                // Set canvas dimensions
-                canvas.width = width;
-                canvas.height = height;
-
-                // Draw and compress image
-                ctx.drawImage(img, 0, 0, width, height);
-                
-                // Convert to base64 with reduced quality
-                const compressedBase64 = canvas.toDataURL('image/jpeg', 0.6);
-
-                // Update preview and store compressed base64
-                previewImg.style.display = 'block';
-                previewImg.src = compressedBase64;
-                imageBase64 = compressedBase64;
             }
         }
         reader.readAsDataURL(file);
     }
 }
 
-document.getElementById('wishForm').addEventListener('submit', async function(e) {
+document.getElementById('wishForm')?.addEventListener('submit', async function (e) {
     e.preventDefault();
 
-    // Show loading spinner
-    document.getElementById('loading').classList.add('show');
+    const loadingEl = document.getElementById('loading');
+    const formContainerEl = document.getElementById('formContainer');
+    const successMessageEl = document.getElementById('successMessage');
+    const wishLinkEl = document.getElementById('wishLink');
+    const nameInput = document.getElementById('name');
+    const titleInput = document.getElementById('title');
+    const contentInput = document.getElementById('content');
+    const imageInput = selectedTheme === "01" ? document.getElementById('image') : null;
 
-    const wishData = {
-        name: document.getElementById('name').value,
-        title: document.getElementById('title').value,
-        content: document.getElementById('content').value,
-        image: imageBase64
-    };
-    // console.log(wishData)
+    if (!nameInput || !titleInput || !contentInput || 
+        !loadingEl || !formContainerEl || !successMessageEl || !wishLinkEl) {
+        alert('Có lỗi xảy ra: Không tìm thấy các trường form');
+        return;
+    }
+
+    // Kiểm tra điều kiện tùy theo theme
+    if (selectedTheme == "01") {
+        if (!nameInput.value || !titleInput.value || !contentInput.value || !imageInput?.files[0]) {
+            alert('Vui lòng điền đầy đủ thông tin và chọn hình ảnh');
+            return;
+        }
+    } else {
+        if (!selectedTheme || !nameInput.value || !titleInput.value || !contentInput.value) {
+            alert('Vui lòng điền đầy đủ thông tin');
+            return;
+        }
+    }
+
+    loadingEl.classList.add('show');
 
     try {
+        const formData = new FormData();
+        formData.append('name', nameInput.value);
+        formData.append('title', titleInput.value);
+        formData.append('content', contentInput.value);
+        formData.append('theme_id', selectedTheme);
+        
+        // Chỉ thêm ảnh nếu là theme 01
+        if (selectedTheme === "01" && imageInput?.files[0]) {
+            formData.append('image', imageInput.files[0]);
+        }
+
         const response = await fetch('/api/v1/saveData', {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json',
                 'x-api-key': api_key
             },
-            body: JSON.stringify(wishData)
+            body: formData
         });
+
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.message || 'Network response was not ok');
+        }
 
         const result = await response.json();
 
         if (result.error === 0) {
-            document.getElementById('formContainer').style.display = 'none';
-            document.getElementById('successMessage').style.display = 'block'; 
-            document.getElementById('wishLink').textContent = `${window.location.origin}/${result.id}`;
+            formContainerEl.style.display = 'none';
+            successMessageEl.style.display = 'block';
+
+            wishLinkEl.innerHTML = `${window.location.origin}/${result.id}`;
+            wishLinkEl.href = `${window.location.origin}/${result.id}`;
         } else {
             alert('Có lỗi xảy ra: ' + result.message);
         }
     } catch (error) {
-        alert(`Có lỗi xảy ra khi gửi lời chúc.`);
+        console.error('Error:', error);
+        alert('Có lỗi xảy ra khi gửi lời chúc: ' + error.message);
     } finally {
-        document.getElementById('loading').classList.remove('show');
+        loadingEl.classList.remove('show');
     }
 });

@@ -13,7 +13,7 @@ function sizeCanvas() {
 }
 sizeCanvas();
 const image = new Image;
-image.src = "assets/img/hoa_dao.png";
+image.src = "./countdown/01/assets/img/hoa_dao.png";
 for (let i = 0; i < thingsCount; i++) {
     let a = Math.random() + .15,
         t = (Math.floor(15 * Math.random()) + 10) * (a + .15),

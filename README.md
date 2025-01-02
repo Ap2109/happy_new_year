@@ -131,8 +131,8 @@ Lưu ý: Lời chúc sẽ chỉ hiển thị sau thời khắc giao thừa, trư
 
 ## Contact
 
-Nguyễn Chí Thọ - [@tho493](https://facebook.com/tho493) - chitho040903@gmail.com - Leader
-Lê Đình Phúc - [Phucptit2003](https://www.facebook.com/phuc.in.12) - Co-Leader
+Nguyễn Chí Thọ - [@tho493](https://facebook.com/tho493) - chitho040903@gmail.com
+<br>
 
 Project Link: [https://github.com/tho493/happy_new_year](https://github.com/tho493/happy_new_year)
 

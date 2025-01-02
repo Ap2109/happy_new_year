@@ -154,7 +154,7 @@ app.get("/:id", async (req, res) => {
     if (wishData.error != 0) {
       return res.status(404).render("error", {"warning_number": 404, "warning_message": wishData.message });
     }
-    else return res.status(200).render("index", { data: wishData.data })
+    else return res.status(200).render(`countdown/01/index`, { data: wishData.data })
   } catch (error) {
     return res.status(500).render("error", {"warning_number": 500, "warning_message": error });
   }
@@ -168,7 +168,8 @@ app.get("/hny/:id", async (req, res) => {
       return res.status(404).render("error", {"warning_number": 404, "warning_message": wishData.message });
     }
     else {
-      return res.status(200).render("intro", { data: wishData.data });
+      const themeId = wishData.data.theme_id || "02";
+      return res.status(200).render(`theme/${themeId}/index`, { data: wishData.data });
     }
   } catch (error) {
     return res.status(500).render("error", {"warning_number": 500, "warning_message": error });

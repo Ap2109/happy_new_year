@@ -5,11 +5,104 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tạo Lời Chúc Năm Mới 2025</title>
     <link rel="stylesheet" href="assets/css/home.css">
-    <link rel="icon" type="image/x-icon" href="assets/images/favicon.ico">
+    <!-- <link rel="icon" type="image/x-icon" href="assets/images/favicon.ico"> -->
     <meta property="og:title" content="Tạo Lời Chúc Năm Mới 2025">
     <meta property="og:description" content="Tạo và gửi những lời chúc năm mới ý nghĩa đến người thân yêu">
     <meta property="og:image" content="assets/image/bgr.jpg">
     <meta property="og:url" content="https://happy-new-year-for-you.vercel.app/">
+    <style>
+        .theme-options {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 30px;
+        }
+        
+        .theme-option {
+            flex: 1;
+            max-width: 400px;
+            padding: 20px;
+            border-radius: 15px;
+            background: linear-gradient(145deg, #ffffff, #f0f0f0);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .theme-option:hover {
+            transform: translateY(-5px);
+        }
+
+        .theme-option img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-bottom: 15px;
+        }
+
+        .theme-option h3 {
+            color: #e74c3c;
+            font-size: 24px;
+            margin: 10px 0;
+        }
+
+        .theme-description {
+            color: #34495e;
+            font-size: 16px;
+            line-height: 1.5;
+            margin-bottom: 15px;
+        }
+
+        .theme-features {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .feature {
+            background: #f39c12;
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 14px;
+        }
+
+        .theme-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .demo-btn, .select-btn {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            text-align: center;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .demo-btn {
+            background: #3498db;
+            color: white;
+        }
+
+        .select-btn {
+            background: #2ecc71;
+            color: white;
+        }
+
+        .demo-btn:hover {
+            background: #2980b9;
+        }
+
+        .select-btn:hover {
+            background: #27ae60;
+        }
+    </style>
 </head>
 <body>
     <div class="firework"></div>
@@ -29,12 +122,12 @@
                 Tạo một thiệp chúc mừng năm mới độc đáo và ý nghĩa để gửi tới những người special trong cuộc đời bạn.
             </p>
 
-            <button onclick="showWishForm()" class="cta-button">
+            <button onclick="showThemeForm()" class="cta-button">
                 🎋 Tạo Lời Chúc Ngay 🎋
             </button>
-            <a href="/hny/25177" class="cta-button">
+            <!-- <a href="/hny/25177" class="cta-button">
                 🎉 Xem Demo 🎉
-            </a>
+            </a> -->
 
             <p class="description">
                 Năm mới Ất Tỵ 2025 đang đến gần! <br>
@@ -42,11 +135,54 @@
             </p>
         </div>
 
+        <div class="form-container" id="themeContainer" style="display: none;">
+            <h1>🎨 Chọn Giao Diện Lời Chúc 🎨</h1>
+            <div class="theme-options">
+                <div class="theme-option">
+                    <img src="assets/img/theme01.png" alt="Theme 1">
+                    <h3>Giao diện 1</h3>
+                    <p class="theme-description">Giao diện mang màu đen chủ đạo, trang nhã với hiệu ứng pháo hoa rực rỡ</p>
+                    <div class="theme-features">
+                        <span class="feature">✨ Pháo hoa</span>
+                        <span class="feature">🎵 Nhạc nền</span>
+                        <span class="feature">🌟 Hiệu ứng chữ</span>
+                    </div>
+                    <div class="theme-buttons">
+                        <a href="/theme/01/demo" class="demo-btn" target="_blank">
+                            <i class="fas fa-eye"></i> Xem Demo
+                        </a>
+                        <button class="select-btn" onclick="selectTheme('01')">
+                            <i class="fas fa-check"></i> Chọn Giao Diện
+                        </button>
+                    </div>
+                </div>
+                <div class="theme-option">
+                    <img src="assets/img/theme02.png" alt="Theme 2">
+                    <h3>Giao diện 2</h3>
+                    <p class="theme-description">Giao diện hiện đại với hiệu ứng tuyết rơi lung linh</p>
+                    <div class="theme-features">
+                        <span class="feature">❄️ Tuyết rơi</span>
+                        <span class="feature">🎵 Nhạc nền</span>
+                        <span class="feature">✨ Hiệu ứng lấp lánh</span>
+                    </div>
+                    <div class="theme-buttons">
+                        <a href="/theme/02/demo" class="demo-btn" target="_blank">
+                            <i class="fas fa-eye"></i> Xem Demo
+                        </a>
+                        <button class="select-btn" onclick="selectTheme('02')">
+                            <i class="fas fa-check"></i> Chọn Giao Diện
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div class="form-container" id="formContainer">
             <h1>🎊 Tạo Lời Chúc Năm Mới 🎊</h1>
             <div class="lunar-year">Năm Ất Tỵ 2025</div>
 
             <form id="wishForm">
+                <input type="hidden" id="selectedTheme" name="theme" value="">
                 <div class="form-group">
                     <label for="name">👋 Tên người chúc:</label>
                     <input type="text" id="name" name="name" required placeholder="Nhập tên hoặc bí danh của bạn">
@@ -62,7 +198,7 @@
                     <textarea id="content" name="content" required placeholder="Nhập nội dung lời chúc năm mới"></textarea>
                 </div>
 
-                <div class="form-group">
+                <div class="form-group" id="form-image">
                     <label for="image">🖼️ Hình ảnh của người nhận:</label>
                     <input type="file" id="image" name="image" required accept="image/*" onchange="previewImage(event)">
                     <div class="image-preview" id="imagePreview">
@@ -100,164 +236,6 @@
 <script>
     const api_key = "<%= api_key %>";
 </script>
-<script>
-    let imageBase64 = null;
-
-        function createFirework() {
-            const firework = document.createElement('div');
-            firework.className = 'firecracker';
-            firework.style.left = Math.random() * window.innerWidth + 'px';
-            firework.style.background = `hsl(${Math.random() * 360}, 100%, 50%)`;
-            document.querySelector('.firework').appendChild(firework);
-
-            setTimeout(() => {
-                firework.remove();
-            }, 3000);
-        }
-
-        function showWishForm() {
-            const homeContent = document.getElementById('homeContent');
-            const formContainer = document.getElementById('formContainer');
-
-            homeContent.classList.add('hide');
-
-            setTimeout(() => {
-                homeContent.style.display = 'none';
-                formContainer.style.display = 'block';
-
-                // Trigger reflow
-                formContainer.offsetHeight;
-
-                formContainer.classList.add('show');
-            }, 500);
-        }
-
-        setInterval(createFirework, 300);
-
-        function previewImage(event) {
-            const preview = document.getElementById('imagePreview');
-            const previewImg = document.getElementById('imagePreviewImg');
-            const file = event.target.files[0];
-
-            if (file) {
-                // Create an image element for compression
-                const img = new Image();
-                const reader = new FileReader();
-
-                reader.onload = function () {
-                    if (reader.result) {
-                        img.src = reader.result.toString();
-                        img.onload = function () {
-                            // Create canvas for compression
-                            const canvas = document.createElement('canvas');
-                            const ctx = canvas.getContext('2d');
-
-                            if (!ctx) {
-                                console.error('Could not get canvas context');
-                                return;
-                            }
-
-                            // Calculate new dimensions (max width/height of 800px)
-                            let width = img.width;
-                            let height = img.height;
-                            const maxSize = 600;
-
-                            if (width > height && width > maxSize) {
-                                height = Math.round((height * maxSize) / width);
-                                width = maxSize;
-                            } else if (height > maxSize) {
-                                width = Math.round((width * maxSize) / height);
-                                height = maxSize;
-                            }
-
-                            // Set canvas dimensions
-                            canvas.width = width;
-                            canvas.height = height;
-
-                            // Draw and compress image
-                            ctx.drawImage(img, 0, 0, width, height);
-
-                            // Convert to base64 with reduced quality
-                            const compressedBase64 = canvas.toDataURL('image/jpeg', 0.6);
-
-                            // Update preview and store compressed base64
-                            if (previewImg) {
-                                previewImg.style.display = 'block';
-                                previewImg.setAttribute('src', compressedBase64);
-                                imageBase64 = compressedBase64;
-                            }
-                        }
-                    }
-                }
-                reader.readAsDataURL(file);
-            }
-        }
-
-        document.getElementById('wishForm')?.addEventListener('submit', async function (e) {
-            e.preventDefault();
-
-            const loadingEl = document.getElementById('loading');
-            const formContainerEl = document.getElementById('formContainer');
-            const successMessageEl = document.getElementById('successMessage');
-            const wishLinkEl = document.getElementById('wishLink');
-            const nameInput = document.getElementById('name');
-            const titleInput = document.getElementById('title');
-            const contentInput = document.getElementById('content');
-            const imageInput = document.getElementById('image');
-
-            if (!nameInput || !titleInput || !contentInput || !imageInput ||
-                !loadingEl || !formContainerEl || !successMessageEl || !wishLinkEl) {
-                alert('Có lỗi xảy ra: Không tìm thấy các trường form');
-                return;
-            }
-
-            // Validate input
-            if (!nameInput.value || !titleInput.value || !contentInput.value || !imageInput.files[0]) {
-                alert('Vui lòng điền đầy đủ thông tin và chọn hình ảnh');
-                return;
-            }
-
-            // Show loading spinner
-            loadingEl.classList.add('show');
-
-            try {
-                const formData = new FormData();
-                formData.append('name', nameInput.value);
-                formData.append('title', titleInput.value);
-                formData.append('content', contentInput.value);
-                formData.append('image', imageInput.files[0]);
-
-                const response = await fetch('/api/v1/saveData', {
-                    method: 'POST',
-                    headers: {
-                        'x-api-key': api_key
-                    },
-                    body: formData
-                });
-
-                if (!response.ok) {
-                    const errorData = await response.json();
-                    throw new Error(errorData.message || 'Network response was not ok');
-                }
-
-                const result = await response.json();
-
-                if (result.error === 0) {
-                    formContainerEl.style.display = 'none';
-                    successMessageEl.style.display = 'block';
-
-                    wishLinkEl.innerHTML = `${window.location.origin}/${result.id}`;
-                    wishLinkEl.href = `${window.location.origin}/${result.id}`;
-                } else {
-                    alert('Có lỗi xảy ra: ' + result.message);
-                }
-            } catch (error) {
-                console.error('Error:', error);
-                alert('Có lỗi xảy ra khi gửi lời chúc: ' + error.message);
-            } finally {
-                loadingEl.classList.remove('show');
-            }
-        });
-</script>
+<script src="./assets/js/home.js"></script>
 </body>
 </html>
