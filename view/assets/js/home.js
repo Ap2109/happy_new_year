@@ -34,6 +34,7 @@ function selectTheme(themeId) {
 
     themeContainer.classList.remove('show');
     document.getElementById("form-image").style.display = "none";
+    document.getElementById("image").removeAttribute("required");
     setTimeout(() => {
         themeContainer.style.display = 'none';
         formContainer.style.display = 'block';
