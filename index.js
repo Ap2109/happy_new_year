@@ -36,15 +36,13 @@ app.post("/api/v1/saveData", async (req, res) => {
       });
     }
 
-    if (!req.files || !req.files.image) {
+    const { name, title, content, theme } = req.body;
+    if (theme === '01' && (!req.files || !req.files.image)) {
       return res.status(400).json({
         error: 1,
         message: "Thiếu file hình ảnh"
       });
     }
-
-    const { name, title, content } = req.body;
-    const imageFile = req.files.image;
 
     // Validate input
     if (!name || !title || !content) {
@@ -62,38 +60,44 @@ app.post("/api/v1/saveData", async (req, res) => {
       });
     }
 
-    // Validate image file
-    if (!imageFile.mimetype.startsWith('image/')) {
-      return res.status(400).json({
-        error: 1,
-        message: "File không phải là hình ảnh"
+    let imageToSave = null;
+
+    // Only process image if it exists
+    if (req.files && req.files.image) {
+      const imageFile = req.files.image;
+
+      // Validate image file
+      if (!imageFile.mimetype.startsWith('image/')) {
+        return res.status(400).json({
+          error: 1,
+          message: "File không phải là hình ảnh"
+        });
+      }
+
+      // Upload file buffer to Cloudinary
+      const uploadResult = await new Promise((resolve, reject) => {
+        const uploadStream = cloudinary.uploader.upload_stream(
+          { folder: 'uploads' },
+          (error, result) => {
+            if (error) reject(error);
+            else resolve(result);
+          }
+        );
+        
+        uploadStream.end(imageFile.data);
       });
+
+      // Lưu đường dẫn của ảnh
+      imageToSave = uploadResult.secure_url;
     }
-
-    // Tạo tên file ngẫu nhiên
-    // const fileName = Date.now() + '-' + Math.round(Math.random() * 1E9) + path.extname(imageFile.name);
-
-    // Upload file buffer to Cloudinary
-    const uploadResult = await new Promise((resolve, reject) => {
-      const uploadStream = cloudinary.uploader.upload_stream(
-        { folder: 'uploads' },
-        (error, result) => {
-          if (error) reject(error);
-          else resolve(result);
-        }
-      );
-      
-      uploadStream.end(imageFile.data);
-    });
-
-    // Lưu đường dẫn của ảnh
-    const imageToSave = uploadResult.secure_url;
     
     const result = await saveData({ name, title, content, image: imageToSave });
     
     if (result.error !== 0) {
-      // Xóa ảnh nếu lỗi
-      await cloudinary.uploader.destroy(uploadResult.public_id);
+      // Xóa ảnh nếu lỗi và ảnh đã được upload
+      if (imageToSave) {
+        await cloudinary.uploader.destroy(uploadResult.public_id);
+      }
       return res.status(400).json(result);
     }
 
@@ -168,7 +172,7 @@ app.get("/hny/:id", async (req, res) => {
       return res.status(404).render("error", {"warning_number": 404, "warning_message": wishData.message });
     }
     else {
-      const themeId = wishData.data.theme_id || "02";
+      const themeId = wishData.data.theme_id || "01";
       return res.status(200).render(`theme/${themeId}/index`, { data: wishData.data });
     }
   } catch (error) {
