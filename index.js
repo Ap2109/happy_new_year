@@ -36,8 +36,8 @@ app.post("/api/v1/saveData", async (req, res) => {
       });
     }
 
-    const { name, title, content, theme } = req.body;
-    if (theme === '01' && (!req.files || !req.files.image)) {
+    const { name, title, content, theme_id } = req.body;
+    if (theme_id === '01' && (!req.files || !req.files.image)) {
       return res.status(400).json({
         error: 1,
         message: "Thiếu file hình ảnh"
@@ -91,7 +91,7 @@ app.post("/api/v1/saveData", async (req, res) => {
       imageToSave = uploadResult.secure_url;
     }
     
-    const result = await saveData({ name, title, content, image: imageToSave });
+    const result = await saveData({ name, title, content, image: imageToSave, theme_id });
     
     if (result.error !== 0) {
       // Xóa ảnh nếu lỗi và ảnh đã được upload

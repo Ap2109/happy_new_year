@@ -33,8 +33,10 @@ function selectTheme(themeId) {
     const formContainer = document.getElementById('formContainer');
 
     themeContainer.classList.remove('show');
-    document.getElementById("form-image").style.display = "none";
-    document.getElementById("image").removeAttribute("required");
+    if (themeId === "02"){
+        document.getElementById("form-image").style.display = "none";
+        document.getElementById("image").removeAttribute("required");
+    }
     setTimeout(() => {
         themeContainer.style.display = 'none';
         formContainer.style.display = 'block';
