@@ -241,6 +241,7 @@
                             <img src="image/big-clouds2.png" alt="Image 4" class="fade-in">
                         </div>
                     </div>
+                   
                     <button id="previos-button">Trở về</button>
                 </div>
             <i class="fa-solid fa-xmark"></i>
@@ -288,14 +289,20 @@
         // Ẩn hộp tin nhắn và hiện hộp ảnh
         document.getElementById("message-box").style.display = "none";
         document.getElementById("image-box").style.display = "grid";
-    
+        const prevButton = document.getElementById("previos-button");
+         // Ẩn hộp tin nhắn và hiển thị hộp ảnh
         // Bắt đầu hiệu ứng trình chiếu ảnh
         const images = document.querySelectorAll('.fade-in');
         let delay = 1000; // Thời gian trễ ban đầu (ms)
     
-        images.forEach((img) => {
+        images.forEach((img, index) => {
             setTimeout(() => {
                 img.classList.add('show'); // Thêm lớp 'show' để kích hoạt hiệu ứng
+                if (index === images.length - 1) {
+                    setTimeout(() => {
+                        prevButton.classList.add('show-button'); 
+                    }, 2000); // Đợi hoàn tất hiệu ứng trước khi hiển thị nút
+                }
             }, delay);
             delay += 2000; // Khoảng cách thời gian giữa các ảnh (ms)
         });
