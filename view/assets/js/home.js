@@ -1,4 +1,5 @@
 let imageBase64 = null;
+let selectedCountdown = '';
 let selectedTheme = '';
 
 function createFirework() {
@@ -13,13 +14,34 @@ function createFirework() {
     }, 3000);
 }
 
-function showThemeForm() {
+setInterval(createFirework, 300);
+
+function showCountdownForm() {
     const homeContent = document.getElementById('homeContent');
-    const themeContainer = document.getElementById('themeContainer');
+    const countdownContainer = document.getElementById('countdownContainer');
 
     homeContent.classList.add('hide');
     setTimeout(() => {
         homeContent.style.display = 'none';
+        countdownContainer.style.display = 'block';
+        countdownContainer.classList.add('show');
+    }, 500);
+}
+
+function selectCountdown(countdownId) {
+    selectedCountdown = countdownId;
+    document.getElementById('selectedCountdown').value = countdownId;
+    
+    const countdownContainer = document.getElementById('countdownContainer');
+    const themeContainer = document.getElementById('themeContainer');
+
+    countdownContainer.classList.remove('show');
+    if (countdownId === "02"){
+        document.getElementById("form-image").style.display = "none";
+        document.getElementById("image").removeAttribute("required");
+    }
+    setTimeout(() => {
+        countdownContainer.style.display = 'none';
         themeContainer.style.display = 'block';
         themeContainer.classList.add('show');
     }, 500);
@@ -43,8 +65,6 @@ function selectTheme(themeId) {
         formContainer.classList.add('show');
     }, 500);
 }
-
-setInterval(createFirework, 300);
 
 function previewImage(event) {
     const preview = document.getElementById('imagePreview');
@@ -136,6 +156,7 @@ document.getElementById('wishForm')?.addEventListener('submit', async function (
         formData.append('title', titleInput.value);
         formData.append('content', contentInput.value);
         formData.append('theme_id', selectedTheme);
+        formData.append('countdown_id', selectedCountdown)
         
         // Chỉ thêm ảnh nếu là theme 01
         if (selectedTheme === "01" && imageInput?.files[0]) {

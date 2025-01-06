@@ -36,7 +36,7 @@ app.post("/api/v1/saveData", async (req, res) => {
       });
     }
 
-    const { name, title, content, theme_id } = req.body;
+    const { name, title, content, theme_id, countdown_id } = req.body;
     if (theme_id === '01' && (!req.files || !req.files.image)) {
       return res.status(400).json({
         error: 1,
@@ -91,7 +91,7 @@ app.post("/api/v1/saveData", async (req, res) => {
       imageToSave = uploadResult.secure_url;
     }
     
-    const result = await saveData({ name, title, content, image: imageToSave, theme_id });
+    const result = await saveData({ name, title, content, image: imageToSave, theme_id, countdown_id });
     
     if (result.error !== 0) {
       // Xóa ảnh nếu lỗi và ảnh đã được upload
@@ -158,7 +158,10 @@ app.get("/:id", async (req, res) => {
     if (wishData.error != 0) {
       return res.status(404).render("error", {"warning_number": 404, "warning_message": wishData.message });
     }
-    else return res.status(200).render(`countdown/01/index`, { data: wishData.data })
+    else {
+      const countdownId = wishData.data.countdown_id || '01';
+      return res.status(200).render(`countdown/${countdownId}/index`, { data: wishData.data })
+    } 
   } catch (error) {
     return res.status(500).render("error", {"warning_number": 500, "warning_message": error });
   }

@@ -274,7 +274,7 @@ function configDidUpdate() {
 	isHighQuality = quality === QUALITY_HIGH;
 	
 	if (skyLightingSelector() === SKY_LIGHT_NONE) {
-		appNodes.canvasContainer.style.backgroundColor = '#000';
+		appNodes.canvasContainer.style.backgroundColor = '#170207'; 
 	}
 	
 	Spark.drawWidth = quality === QUALITY_HIGH ? 0.75 : 1;

@@ -381,8 +381,6 @@
 
 
   /* Happy new year text */
-
-
   .loader {
     position: fixed;
     overflow: hidden;
@@ -396,7 +394,7 @@
   }
 
   .loader_title {
-    font-family: 'Roboto';
+    font-family: 'helvetica';
     font-size: 72px;
     font-weight: 700;
     display: flex;
@@ -405,12 +403,33 @@
     align-items: center;
     padding: 15px;
     letter-spacing: 1px;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.9);
+    animation: slideUp 2s ease forwards;
+    opacity: 0;
+    transform: translateY(100%);
   }
 
   .loader_title span {
+    margin-left: -15px;
     animation: loader_text 3s linear infinite;
-    animation-delay: calc(0.1s * var(--i));
-    letter-spacing: -15px;
+    animation-delay: calc((0.1s * var(--i)) + 2s);
+  }
+
+  @keyframes slideUp {
+    0% {
+      transform: translateY(100%);
+      opacity: 0;
+    }
+
+    50% {
+      transform: translateY(-10%);
+      opacity: 0.7;
+    }
+
+    100% {
+      transform: translateY(0);
+      opacity: 1;
+    }
   }
 
   @keyframes loader_text {
@@ -456,7 +475,7 @@
       color: #fff;
       margin-top: 2rem;
       padding: 2rem;
-      font-family: 'Russo One', sans-serif;
+      font-family: "Playwrite AU SA", serif;
       animation: fadeIn 1s ease-in;
     }
   
@@ -498,25 +517,29 @@
       padding: 1em 2em;
       border: none;
       border-radius: 25px;
-      background-color: #1b1b1b;
+      background-color: #cccccc;
       color: white;
       font-size: 1.2rem;
       font-weight: bold;
       cursor: pointer;
       overflow: hidden;
       transition: all 0.3s ease;
+      animation: slideUp 1.5s ease-out;
+      transform: translateY(100%);
+      opacity: 0;
+      animation-fill-mode: forwards;
     }
   
     .show-wishes-btn span {
       position: relative;
       z-index: 1;
-      color: #fff;
+      color: #252525;
     }
   
     .show-wishes-btn:hover {
       transform: scale(1.1);
     }
-  
+
     .star-1,
     .star-2,
     .star-3 {

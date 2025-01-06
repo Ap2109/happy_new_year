@@ -1,0 +1,57 @@
+
+<!DOCTYPE html>
+<html>
+
+<header>
+    <title>Happy New Year Countdown</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../countdown/02/assets/css/style.css">
+    <script type="text/javascript" src="../countdown/02/assets/js/timer.js"></script>
+    <script>
+        var script = document.createElement('script');
+        script.src = '../countdown/02/assets/js/fireworks.js';
+        script.type = 'text/javascript';
+        document.getElementsByTagName('head')[0].appendChild(script);
+    </script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Playwrite+AU+SA:wght@100..400&family=Prompt:wght@400;700&display=swap"
+        rel="stylesheet">
+    <link href='https://fonts.googleapis.com/css?family=Vibur:400' rel='stylesheet' type='text/css'>
+</header>
+
+<body>
+    <!-- <audio autoplay loop>
+        <source src="audio/fireworks.mp3">
+    </audio> -->
+    <h2 id="banner">Happy New Year</h2>
+    <span id="timer">Loading...</span>
+    <canvas id="canvas">Your browser does not support the 'canvas' element.</canvas>
+    <div id="homeContent">
+        <h2 id="typingContent"></h2>
+    </div>
+    <script>
+        const wishData = {
+            id: '<%= data.id %>',
+            time: '<%= data.time %>',
+            name: '<%= data.name %>',
+            image: '<%= data.image %>',
+            title: '<%= data.title %>',
+            content: '<%= data.content %>'
+        };
+        const typingContent = document.getElementById('typingContent');
+        const text = 'Chào Mừng Năm Mới';
+        let index = 0;
+
+        function type() {
+            typingContent.innerText = text.slice(0, index);
+            index++;
+        }
+
+        setInterval(type, 100);
+    </script>
+</body>
+
+
+</html>
+

@@ -64,17 +64,22 @@
  }
 
  .form-container {
-     display: none;
-     width: 100%;
-     max-width: 800px;
-     margin-top: 20px;
-     transform: scale(0);
-     transition: transform 0.5s ease-in-out;
+    display: none;
+    width: 100%;
+    max-width: 800px;
+    margin-top: 20px;
+    transform: scale(0);
+    transition: transform 0.5s ease-in-out;
+    padding: 20px;
+    text-align: center;
+
  }
 
  .form-container.show {
      transform: scale(1);
  }
+
+ 
 
  .form-group {
      margin: 20px 0;
@@ -221,16 +226,33 @@
  }
 
  .donate-box img {
-     width: 16.67vw;
-     height: 16.67vw;
+     width: 300px;
+     height: 300px;
      margin-bottom: 1vw;
+     padding: 20px
  }
 
  .donate-text {
      color: #f1c40f;
-     font-size: 0.9vw;
-     margin-top: 0.5vw;
+     font-size: 15px;
+     /* margin-top: 5px; */
  }
+
+.exit-button {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    width: 30px;
+    height: 30px;
+    font-size: 20px;
+    line-height: 30px;
+    text-align: center;
+    background-color: transparent;
+    border: none;
+    color: white;
+    cursor: pointer;
+    z-index: 10;
+}
 
  .loading {
      display: none;
@@ -268,7 +290,7 @@
      display: flex;
  }
 
- @media (max-width: 600px) {
+ @media (max-width: 768px) {
      h1 {
          font-size: 2em;
      }
@@ -295,23 +317,57 @@
          right: 2vw;
      }
 
-     .donate-box img {
-         width: 16.67vw;
-         height: 16.67vw;
-     }
+    @media (max-width: 480px) {
+        h1 {
+            font-size: 20px;
+        }
+
+        .theme-description {
+            font-size: 12px;
+        }
+
+        .theme-option {
+            padding: 10px;
+        }
+
+        .donate-box img {
+            width: 150px;
+            height: 150px;
+        }
+    }
+
+    .theme-option {
+        width: 90%;
+        margin: 10px auto;
+    }
+
+    .theme-description {
+        font-size: 14px;
+    }
+
+    h1 {
+        font-size: 24px;
+    }
+
+    .donate-box img {
+        width: 200px;
+        height: 200px;
+    }
  }
 
   .theme-options {
-      display: flex;
-      justify-content: center;
-      gap: 30px;
-      margin-top: 30px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 30px;
+    margin-top: 30px;
   }
 
   .theme-option {
       flex: 1;
       max-width: 400px;
       padding: 20px;
+      border: 1px solid #ddd;
       border-radius: 15px;
       background: linear-gradient(145deg, #ffffff, #f0f0f0);
       box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);

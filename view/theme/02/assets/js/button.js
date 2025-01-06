@@ -2,6 +2,15 @@ function toggleWishes() {
   const wishesSection = document.querySelector('.new-year-wishes');
   const button = document.querySelector('.show-wishes-btn');
 
+    // Fancy exit for button
+  button.style.transform = 'scale(1)';
+  button.style.transition = 'all 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55)';
+  button.style.opacity = '0';
+  button.style.transform = 'scale(0.2) rotate(180deg)';
+  button.style.display = 'none';
+  // setTimeout(() => {
+  // }, 800);
+
   var mySong = document.getElementById("song")
       if (mySong.paused) {
         mySong.play()
@@ -36,15 +45,6 @@ function toggleWishes() {
     `;
     wishesSection.appendChild(sparkle);
   }
-
-  // Fancy exit for button
-  button.style.transform = 'scale(1)';
-  button.style.transition = 'all 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55)';
-  button.style.opacity = '0';
-  button.style.transform = 'scale(0.2) rotate(180deg)';
-  setTimeout(() => {
-    button.style.display = 'none';
-  }, 800);
 }
 
 // Add sparkle animation
