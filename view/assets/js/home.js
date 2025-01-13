@@ -1,4 +1,3 @@
-let imageBase64 = null;
 let selectedCountdown = '';
 let selectedTheme = '';
 
@@ -36,10 +35,6 @@ function selectCountdown(countdownId) {
     const themeContainer = document.getElementById('themeContainer');
 
     countdownContainer.classList.remove('show');
-    if (countdownId === "02"){
-        document.getElementById("form-image").style.display = "none";
-        document.getElementById("image").removeAttribute("required");
-    }
     setTimeout(() => {
         countdownContainer.style.display = 'none';
         themeContainer.style.display = 'block';
@@ -55,9 +50,26 @@ function selectTheme(themeId) {
     const formContainer = document.getElementById('formContainer');
 
     themeContainer.classList.remove('show');
-    if (themeId === "02"){
-        document.getElementById("form-image").style.display = "none";
+    if(themeId === "01" ){
+        document.getElementById("form-image__1").style.display = "block";
+        document.getElementById("image").setAttribute("required", "");
+
+        document.getElementById("form-image__2").style.display = "none";
         document.getElementById("image").removeAttribute("required");
+    }
+    else if (themeId === "02"){
+        document.getElementById("form-image__1").style.display = "none";
+        document.getElementById("image").removeAttribute("required");
+        
+        document.getElementById("form-image__2").style.display = "none";
+        document.getElementById("image").removeAttribute("required");
+    }
+    else if (themeId === "03"){
+        document.getElementById("form-image__1").style.display = "block";
+        document.getElementById("image").setAttribute("required", "");
+
+        document.getElementById("form-image__2").style.display = "block";
+        document.getElementById("image").setAttribute("required", "");
     }
     setTimeout(() => {
         themeContainer.style.display = 'none';
@@ -66,12 +78,20 @@ function selectTheme(themeId) {
     }, 500);
 }
 
-function previewImage(event) {
-    const preview = document.getElementById('imagePreview');
-    const previewImg = document.getElementById('imagePreviewImg');
-    const file = event.target.files[0];
+function previewImage(event, prevId) {
+    const files = event.target.files;
+    const maxFiles = selectedTheme === '01' || selectedTheme === '02' ? 1 : 4;
 
-    if (file) {
+    document.getElementById(prevId).innerHTML = '';
+
+    if (files.length > maxFiles) {
+        alert(`Tối đa ${maxFiles} ảnh có thể được chọn.`);
+        event.target.value = '';
+        return;
+    }
+
+    for (let i = 0; i < files.length; i++) {
+        const file = files[i];
         const img = new Image();
         const reader = new FileReader();
 
@@ -105,11 +125,9 @@ function previewImage(event) {
 
                     const compressedBase64 = canvas.toDataURL('image/jpeg', 0.6);
 
-                    if (previewImg) {
-                        previewImg.style.display = 'block';
-                        previewImg.setAttribute('src', compressedBase64);
-                        imageBase64 = compressedBase64;
-                    }
+                    const variableHtml = `<img style="display: block;" src="${compressedBase64}" class="img-fluid" alt="Preview Image" />`;
+
+                    document.getElementById(prevId).insertAdjacentHTML("beforeend", variableHtml);
                 }
             }
         }
@@ -127,7 +145,8 @@ document.getElementById('wishForm')?.addEventListener('submit', async function (
     const nameInput = document.getElementById('name');
     const titleInput = document.getElementById('title');
     const contentInput = document.getElementById('content');
-    const imageInput = selectedTheme === "01" ? document.getElementById('image') : null;
+    const imageInput = selectedTheme === "01" || selectedTheme === "03" ? document.getElementById('image') : null;
+    const imagesInput = selectedTheme === "03" ? document.getElementById('images') : null;
 
     if (!nameInput || !titleInput || !contentInput || 
         !loadingEl || !formContainerEl || !successMessageEl || !wishLinkEl) {
@@ -140,6 +159,15 @@ document.getElementById('wishForm')?.addEventListener('submit', async function (
         if (!nameInput.value || !titleInput.value || !contentInput.value || !imageInput?.files[0]) {
             alert('Vui lòng điền đầy đủ thông tin và chọn hình ảnh');
             return;
+        }
+    } else if (selectedTheme == "03") {
+        if (!nameInput.value || !titleInput.value || !contentInput.value) {
+            alert('Vui lòng điền đầy đủ thông tin');
+            return;
+        }
+        if (imagesInput?.files.length > 4) {
+            alert('Chỉ được chọn tối đa 4 hình ảnh');
+            return; 
         }
     } else {
         if (!selectedTheme || !nameInput.value || !titleInput.value || !contentInput.value) {
@@ -156,11 +184,17 @@ document.getElementById('wishForm')?.addEventListener('submit', async function (
         formData.append('title', titleInput.value);
         formData.append('content', contentInput.value);
         formData.append('theme_id', selectedTheme);
-        formData.append('countdown_id', selectedCountdown)
-        
-        // Chỉ thêm ảnh nếu là theme 01
-        if (selectedTheme === "01" && imageInput?.files[0]) {
+        formData.append('countdown_id', selectedCountdown);
+
+        if (selectedTheme === "01" || selectedTheme === "03") {
             formData.append('image', imageInput.files[0]);
+        }
+        
+        let images_obj = {};
+        if (selectedTheme === "03") {
+            for (let i = 0; i < imagesInput.files.length; i++) {
+                formData.append(`images-${i}`, imagesInput.files[i]);
+            }
         }
 
         const response = await fetch('/api/v1/saveData', {
@@ -172,8 +206,8 @@ document.getElementById('wishForm')?.addEventListener('submit', async function (
         });
 
         if (!response.ok) {
-            const errorData = await response.json();
-            throw new Error(errorData.message || 'Network response was not ok');
+            const errorMessage = await response.text();
+            throw new Error(`Error: ${response.status} - ${errorMessage}`);
         }
 
         const result = await response.json();

@@ -1,5 +1,6 @@
 const { initializeApp } = require("firebase/app");
 const { getDatabase, ref, get, set } = require("firebase/database");
+const cloudinary = require('cloudinary').v2;
 require('dotenv').config();
 
 const firebaseConfig = {
@@ -13,9 +14,43 @@ const firebaseConfig = {
   measurementId: process.env.measurementId
 };
 
+// Upload to Cloudinary for persistent storage
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET
+});
+
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
+
+async function uploadImage(imageFile) {
+  // Upload lên Cloudinary
+  return new Promise((resolve, reject) => {
+    const uploadStream = cloudinary.uploader.upload_stream(
+      { folder: 'uploads' }, (error, result) => {
+        if (error) {
+          reject(error);
+        } else {
+          resolve(result.secure_url);
+        }
+      }
+    );
+
+    uploadStream.end(imageFile);
+  });
+}
+
+async function deleteImage(publicId) {
+  return new Promise((resolve, reject) => {
+    cloudinary.uploader.destroy(publicId, (error, result) => {
+      if (error) reject(error);
+      else resolve(result);
+    });
+  });
+}
+
 
 async function saveData(wishData) {
     try {
@@ -45,7 +80,7 @@ async function saveData(wishData) {
         // Create new wish object with validation
         const wish = {
             id,
-            time: new Date().toLocaleString('vi-VN'), // Use Vietnamese locale
+            time: new Date().toLocaleString('vi-VN'),
             ...wishData
         };
 
@@ -58,7 +93,7 @@ async function saveData(wishData) {
         try {
             await set(ref(db, id), wish);
         } catch (dbError) {
-            throw new Error(`Failed to save to database: ${dbError.message}`);
+            throw new Error(`Failed to save to firebase: ${dbError.message}`);
         }
 
         return { "error": 0, "id": wish.id };
@@ -81,4 +116,4 @@ async function getData(id) {
     }
 }
 
-module.exports = { saveData, getData };
+module.exports = { saveData, getData, uploadImage, deleteImage };

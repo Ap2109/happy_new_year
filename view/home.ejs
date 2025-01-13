@@ -118,6 +118,25 @@
                         </button>
                     </div>
                 </div>
+                <div class="theme-option">
+                    <img src="assets/img/theme01.png" alt="Theme 3">
+                    <h3>Giao diện 3</h3>
+                    <p class="theme-description">Giao diện tương tự giao diện 1, được đóng góp bởi <a href="https://github.com/Phucptit2003">@Phucptit2003</a></p>
+                    <div class="theme-features">
+                        <span class="feature">❄️ Tuyết rơi</span>
+                        <span class="feature">🎵 Nhạc nền</span>
+                        <span class="feature">✨ Hiệu ứng lấp lánh</span>
+                        <span class="feature">✨ Thêm ảnh kỉ niệm</span>
+                    </div>
+                    <div class="theme-buttons">
+                        <a href="/hny/C8dIGB" class="demo-btn" target="_blank">
+                            <i class="fas fa-eye"></i> Xem Demo
+                        </a>
+                        <button class="select-btn" onclick="selectTheme('03')">
+                            <i class="fas fa-check"></i> Chọn Giao Diện
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -143,11 +162,19 @@
                     <textarea id="content" name="content" required placeholder="Nhập nội dung lời chúc năm mới"></textarea>
                 </div>
 
-                <div class="form-group" id="form-image">
+                <div class="form-group" id="form-image__1" style="display: none;">
                     <label for="image">🖼️ Hình ảnh của người nhận:</label>
-                    <input type="file" id="image" name="image" required accept="image/*" onchange="previewImage(event)">
-                    <div class="image-preview" id="imagePreview">
-                        <img id="imagePreviewImg" src="" alt="Preview">
+                    <input type="file" id="image" name="image" accept="image/*" onchange="previewImage(event, `imagePreview__1`)">
+                    <div class="image-preview" id="imagePreview__1">
+                        <!-- <img id="imagePreviewImg" src="" alt="Preview"> -->
+                    </div>
+                </div>
+
+                <div class="form-group" id="form-image__2" style="display: none;">
+                    <label for="image">🖼️ Hình ảnh mặt sau của lời chúc:</label>
+                    <input type="file" id="images" name="image" accept="image/*" onchange="previewImage(event,`imagePreview__2`)" multiple>
+                    <div class="image-preview" id="imagePreview__2">
+                        <!-- <img id="imagePreviewImg" src="" alt="Preview"> -->
                     </div>
                 </div>
 

@@ -1,6 +1,6 @@
 {
   "name": "web_happy_new_year",
-  "version": "2.5.0",
+  "version": "2.5.1",
   "description": "Trang web chúc mừng năm mới",
   "scripts": {
     "start": "node index.js"
