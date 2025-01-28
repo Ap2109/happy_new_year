@@ -6,7 +6,7 @@
         },
 
         get period() {
-            let t = new Date("jan 29, 2025 23:59:00").getTime(),
+            let t = new Date("jan 28, 2025 23:59:00").getTime(),
                 n = new Date,
                 r = Math.floor((t - n) / 1e3),
                 o = Math.floor(r / 60),
