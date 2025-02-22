@@ -143,3 +143,7 @@ Cảm ơn bạn đã sử dụng website của tôi! ❤️
 Sự ủng hộ của các bạn là động lực để tôi tiếp tục phát triển và cải thiện dự án này tốt hơn.
 
 Chúc các bạn một năm mới An Khang Thịnh Vượng! 🎊
+
+---
+
+Feel free to contribute to this project by opening issues or submitting pull requests!
