@@ -2,7 +2,7 @@ pipeline {
     agent any
     stages {
         stage('Checkout') {
-            steps { git 'https://github.com/yourrepo/sample-node-app.git' }
+            steps { git 'https://github.com/Ap2109/happy_new_year' }
         }
         stage('Install') {
             steps { sh 'npm install' }
