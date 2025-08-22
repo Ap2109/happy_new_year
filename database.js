@@ -1,4 +1,4 @@
-const { initializeApp } = require("firebase/app");
+/* const { initializeApp } = require("firebase/app");
 const { getDatabase, ref, get, set } = require("firebase/database");
 const cloudinary = require('cloudinary').v2;
 require('dotenv').config();
@@ -117,3 +117,11 @@ async function getData(id) {
 }
 
 module.exports = { saveData, getData, uploadImage, deleteImage };
+*/
+
+module.exports = {
+  ref: () => ({
+    set: () => console.log("Mock DB: set() called"),
+    get: () => console.log("Mock DB: get() called")
+  })
+};
