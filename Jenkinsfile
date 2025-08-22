@@ -32,5 +32,14 @@ pipeline {
             }
         }
 
+        stage('Deploy') {
+            steps {
+                // Deploy with PM2 (production process manager for Node.js)
+                sh '''
+                pm2 stop happy_app || true
+                pm2 start index.js --name happy_app
+                '''
+            }
+        }
     }
 }
